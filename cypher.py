@@ -1,24 +1,10 @@
 from langchain_neo4j import Neo4jGraph, GraphCypherQAChain
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI,OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
+from llm import llm
+from graph import graph
 from langchain.prompts.prompt import PromptTemplate
-
-load_dotenv()
-
-NEO4J_URL = os.getenv("NEO4J_URL")
-NEO4J_USERNAME = os.getenv("NEO4J_USERNAME")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
-LLM_BASE_URL=os.getenv("LLM_BASE_URL")
-LLM_API_KEY=os.getenv("LLM_API_KEY")
-
-if not all([NEO4J_URL, NEO4J_USERNAME, NEO4J_PASSWORD]):
-    raise ValueError("Missing one or more required environment variables for Neo4j connection.")
-
-graph = Neo4jGraph(url=NEO4J_URL, username=NEO4J_USERNAME, password=NEO4J_PASSWORD,enhanced_schema=True)
-
-llm=ChatOpenAI(base_url=LLM_BASE_URL,temperature=0.8,streaming=True,api_key=LLM_API_KEY)
-
 
 
 CYPHER_GENERATION_TEMPLATE = """
@@ -50,8 +36,3 @@ cypher_chain = GraphCypherQAChain.from_llm(
     allow_dangerous_requests=True,function_response_system="Respond like you are smart"
 )
 
-a=cypher_chain.invoke(
-    "Who are John doe's friends and what do they major in, how old are they"
-)
-
-print(a)

@@ -1,9 +1,10 @@
 from langchain_neo4j import Neo4jGraph, GraphCypherQAChain
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI,OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
+# from llm import llm, embeddings
 from langchain.prompts.prompt import PromptTemplate
-
+import streamlit as st
 load_dotenv()
 
 NEO4J_URL = os.getenv("NEO4J_URL")
@@ -18,6 +19,7 @@ if not all([NEO4J_URL, NEO4J_USERNAME, NEO4J_PASSWORD]):
 graph = Neo4jGraph(url=NEO4J_URL, username=NEO4J_USERNAME, password=NEO4J_PASSWORD,enhanced_schema=True)
 
 llm=ChatOpenAI(base_url=LLM_BASE_URL,temperature=0.8,streaming=True,api_key=LLM_API_KEY)
+embeddings=OpenAIEmbeddings()
 
 
 
