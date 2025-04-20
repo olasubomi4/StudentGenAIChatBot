@@ -1,8 +1,6 @@
-from langchain_neo4j import Neo4jGraph, GraphCypherQAChain
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 import os
-from langchain.prompts.prompt import PromptTemplate
 
 load_dotenv()
 
@@ -13,4 +11,4 @@ LLM_BASE_URL=os.getenv("LLM_BASE_URL")
 LLM_API_KEY=os.getenv("LLM_API_KEY")
 
 
-llm=ChatOpenAI(base_url=LLM_BASE_URL,temperature=0.8,streaming=True,api_key=LLM_API_KEY)
+llm=ChatOpenAI(base_url=LLM_BASE_URL,temperature=0.3,streaming=True,api_key=LLM_API_KEY)

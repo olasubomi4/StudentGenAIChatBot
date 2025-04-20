@@ -1,13 +1,7 @@
 from llm import llm
 from graph import graph
-
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.schema import StrOutputParser
-
 from langchain.tools import Tool
-
 from langchain_neo4j import Neo4jChatMessageHistory
-
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain import hub
@@ -20,7 +14,7 @@ def student_bot_func(input: str):
 tools = [
     Tool.from_function(
         name="General chat",
-        description="Bot containing information about student in the class",
+        description="Bot containing information about student in the class,Always use this tool to answer any question",
         func=student_bot_func
     )
 ]
